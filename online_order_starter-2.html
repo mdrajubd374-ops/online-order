@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Online Order — a Saudi shopping marketplace">
+<title>Online Order | Saudi Marketplace</title>
+<style>
+:root{--green:#087f5b;--dark:#10231d;--muted:#66756f;--line:#e5ece8;--bg:#f6f9f7;--white:#fff;--gold:#f3b63f}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--dark)}
+a{color:inherit;text-decoration:none}button,input{font:inherit}.top{background:#10231d;color:#eaf5ef;text-align:center;padding:8px 12px;font-size:12px}
+header{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+.nav{max-width:1150px;margin:auto;padding:14px 20px;display:flex;align-items:center;gap:18px}
+.logo{font-size:23px;font-weight:800;letter-spacing:-1px;color:var(--green);white-space:nowrap}.logo span{color:var(--dark)}
+.search{display:flex;flex:1;max-width:560px}.search input{width:100%;padding:12px 14px;border:1px solid #d7e2dc;border-radius:10px 0 0 10px;outline:none}.search button{border:0;background:var(--green);color:#fff;padding:0 17px;border-radius:0 10px 10px 0}
+.navbtn{border:1px solid var(--line);background:#fff;border-radius:9px;padding:10px 12px;cursor:pointer;white-space:nowrap}.cart{background:#eaf5ef;color:var(--green);font-weight:700}
+main{max-width:1150px;margin:24px auto;padding:0 20px}
+.hero{background:linear-gradient(115deg,#103c2d,#087f5b);color:#fff;border-radius:20px;padding:36px;display:grid;grid-template-columns:1.5fr 1fr;gap:20px;align-items:center;overflow:hidden}
+.eyebrow{color:#c6f0d9;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
+.hero h1{font-size:clamp(30px,5vw,48px);line-height:1.08;margin:12px 0}.hero p{color:#d7eee2;line-height:1.6;max-width:530px}
+.hero .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.primary,.secondary{border:0;border-radius:10px;padding:12px 17px;font-weight:700;cursor:pointer}.primary{background:#fff;color:#075c42}.secondary{background:#ffffff20;color:#fff;border:1px solid #ffffff66}
+.hero-art{font-size:100px;text-align:center;filter:drop-shadow(0 14px 12px #001b1233)}
+.section-head{display:flex;justify-content:space-between;align-items:end;margin:30px 0 14px}.section-head h2{margin:0;font-size:22px}.section-head p{margin:5px 0 0;color:var(--muted);font-size:13px}
+.categories{display:flex;gap:10px;overflow:auto;padding-bottom:5px}.chip{background:#fff;border:1px solid var(--line);border-radius:999px;padding:10px 15px;white-space:nowrap;cursor:pointer}.chip.active{background:#e4f4eb;border-color:#a9d9bf;color:#066747;font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}.product{background:#fff;border:1px solid var(--line);border-radius:15px;overflow:hidden}.product .pic{height:145px;background:#eef5f0;display:grid;place-items:center;font-size:60px}.product .info{padding:13px}.tag{font-size:11px;color:var(--green);font-weight:700}.product h3{font-size:15px;margin:7px 0}.price{font-weight:800;font-size:17px}.old{font-size:12px;color:#8a9690;text-decoration:line-through;margin-left:5px}.product button{width:100%;margin-top:12px;border:0;border-radius:8px;padding:10px;background:var(--green);color:#fff;font-weight:700;cursor:pointer}
+.panel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px;margin-top:26px}.panel h2{margin:0 0 8px}.panel p{color:var(--muted);line-height:1.55}.roles{display:grid;grid-template-columns:1fr 1fr;gap:14px}.role{border:1px solid var(--line);border-radius:12px;padding:17px}.role strong{font-size:16px}.role button{margin-top:10px;border:0;border-radius:8px;padding:10px 13px;background:#e7f4ed;color:#086345;font-weight:700;cursor:pointer}
+footer{margin-top:35px;background:#10231d;color:#d9e8e0;padding:28px 20px}.foot{max-width:1150px;margin:auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}.foot small{color:#adc0b5}
+.notice{font-size:12px;color:#68766f;margin:16px 0 0;line-height:1.5}
+.modal{display:none;position:fixed;inset:0;background:#061b13aa;z-index:10;padding:18px;align-items:center;justify-content:center}.modal.show{display:flex}.dialog{background:#fff;border-radius:16px;padding:22px;max-width:430px;width:100%}.dialog h2{margin-top:0}.dialog input{width:100%;padding:12px;border:1px solid var(--line);border-radius:8px;margin:7px 0 12px}.dialog .close{float:right;border:0;background:#eef4f0;border-radius:50%;width:30px;height:30px;cursor:pointer}
+@media(max-width:800px){.grid{grid-template-columns:repeat(2,1fr)}.hero{grid-template-columns:1fr;padding:26px}.hero-art{display:none}.nav{flex-wrap:wrap}.search{order:3;max-width:none;flex-basis:100%}.roles{grid-template-columns:1fr}}
+@media(max-width:420px){main{padding:0 12px}.nav{padding:12px}.navbtn{padding:9px}.grid{gap:10px}.product .pic{height:115px}.product .info{padding:10px}}
+</style>
+</head>
+<body>
+<div class="top">🇸🇦 Built for shoppers and sellers in Saudi Arabia · Prices shown in SAR</div>
+<header><div class="nav">
+  <a class="logo" href="#">Online <span>Order</span></a>
+  <form class="search" onsubmit="event.preventDefault();filterProducts()"><input id="search" placeholder="Search products..." aria-label="Search products"><button type="submit">Search</button></form>
+  <button class="navbtn" onclick="openModal('account')">Sign in</button>
+  <button class="navbtn cart" onclick="showCart()">🛒 Cart (<span id="count">0</span>)</button>
+</div></header>
+<main>
+<section class="hero">
+ <div><div class="eyebrow">Your marketplace in Saudi Arabia</div><h1>Shop smart.<br>Order with ease.</h1>
+ <p>Discover everyday products from independent sellers. A simple shopping experience, with more choices coming soon.</p>
+ <div class="actions"><button class="primary" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Explore products</button><button class="secondary" onclick="openModal('seller')">Become a seller</button></div></div>
+ <div class="hero-art">🛍️📦</div>
+</section>
+<div class="section-head"><div><h2>Shop by category</h2><p>Choose a category to explore</p></div></div>
+<div class="categories">
+ <button class="chip active" onclick="setCategory('All',this)">All</button><button class="chip" onclick="setCategory('Electronics',this)">📱 Electronics</button><button class="chip" onclick="setCategory('Fashion',this)">👕 Fashion</button><button class="chip" onclick="setCategory('Home',this)">🏠 Home</button><button class="chip" onclick="setCategory('Beauty',this)">✨ Beauty</button><button class="chip" onclick="setCategory('Food',this)">🍎 Food</button>
+</div>
+<div class="section-head" id="products"><div><h2>Featured products</h2><p>Sample products — replace these with your real seller listings</p></div></div>
+<div class="grid" id="grid">
+ <article class="product" data-category="Electronics" data-name="Wireless headphones"><div class="pic">🎧</div><div class="info"><div class="tag">ELECTRONICS</div><h3>Wireless Headphones</h3><div class="price">SAR 89.00</div><button onclick="addCart('Wireless Headphones',89)">Add to cart</button></div></article>
+ <article class="product" data-category="Fashion" data-name="Everyday backpack"><div class="pic">🎒</div><div class="info"><div class="tag">FASHION</div><h3>Everyday Backpack</h3><div class="price">SAR 65.00</div><button onclick="addCart('Everyday Backpack',65)">Add to cart</button></div></article>
+ <article class="product" data-category="Home" data-name="Coffee maker"><div class="pic">☕</div><div class="info"><div class="tag">HOME</div><h3>Home Coffee Maker</h3><div class="price">SAR 129.00</div><button onclick="addCart('Home Coffee Maker',129)">Add to cart</button></div></article>
+ <article class="product" data-category="Beauty" data-name="Skincare set"><div class="pic">🧴</div><div class="info"><div class="tag">BEAUTY</div><h3>Daily Skincare Set</h3><div class="price">SAR 49.00</div><button onclick="addCart('Daily Skincare Set',49)">Add to cart</button></div></article>
+</div>
+<section class="panel"><h2>Join Online Order</h2><p>Shop as a customer or apply to sell your products on our marketplace.</p>
+ <div class="roles"><div class="role"><strong>👤 Customer account</strong><p>Create an account, save your details and track your orders.</p><button onclick="openModal('account')">Customer sign in / register</button></div>
+ <div class="role"><strong>🏪 Seller account</strong><p>Apply to list products and manage your store after approval.</p><button onclick="openModal('seller')">Seller registration</button></div></div>
+ <p class="notice">Prototype notice: account buttons are previews only. Secure account creation, email OTP, seller approval, real orders, payment processing, AI support and the 10% commission ledger must be connected to a protected backend before launch.</p>
+</section>
+</main>
+<footer><div class="foot"><div><div class="logo" style="color:#8ee0b7">Online <span style="color:#fff">Order</span></div><small>Saudi Arabia · SAR</small></div><div><b>Marketplace</b><p><small>Customer support · Seller help · Order tracking</small></p></div><div><small>© 2026 Online Order. All rights reserved.</small></div></div></footer>
+<div class="modal" id="account"><div class="dialog"><button class="close" onclick="closeModal('account')">×</button><h2>Customer account</h2><p>Secure sign-in will be enabled after backend setup.</p><label>Email address</label><input type="email" placeholder="you@example.com"><label>Password</label><input type="password" placeholder="Choose a password" disabled><button class="primary" style="background:#087f5b;color:white;width:100%" onclick="alert('Demo only: secure email verification is not connected yet.')">Continue (preview)</button><p class="notice">Never enter your Gmail password here. The live site will use a secure email verification code.</p></div></div>
+<div class="modal" id="seller"><div class="dialog"><button class="close" onclick="closeModal('seller')">×</button><h2>Seller registration</h2><p>Seller onboarding preview. Applications will be reviewed by the marketplace admin.</p><label>Store name</label><input placeholder="Your store name"><label>Contact email</label><input type="email" placeholder="seller@example.com"><button class="primary" style="background:#087f5b;color:white;width:100%" onclick="alert('Demo only: seller applications are not submitted yet.')">Apply to sell (preview)</button><p class="notice">Seller identity, business details and payout setup must be verified securely before selling.</p></div></div>
+<script>
+let cart=[];
+function addCart(name,price){cart.push({name,price});document.getElementById('count').textContent=cart.length;alert(name+' added to your demo cart.');}
+function showCart(){if(!cart.length){alert('Your cart is empty.');return;}let total=cart.reduce((s,p)=>s+p.price,0);alert('Demo cart:\\n'+cart.map(p=>p.name+' — SAR '+p.price.toFixed(2)).join('\\n')+'\\nTotal: SAR '+total.toFixed(2));}
+function openModal(id){document.getElementById(id).classList.add('show')}
+function closeModal(id){document.getElementById(id).classList.remove('show')}
+function setCategory(cat,el){document.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));el.classList.add('active');document.querySelectorAll('.product').forEach(p=>p.style.display=(cat==='All'||p.dataset.category===cat)?'':'none')}
+function filterProducts(){let q=document.getElementById('search').value.toLowerCase();document.querySelectorAll('.product').forEach(p=>p.style.display=p.dataset.name.toLowerCase().includes(q)?'':'none')}
+</script>
+</body></html>
